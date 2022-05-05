@@ -1,5 +1,5 @@
 # FPM_diffusion
-Boilerplate code for simulating FPMs, computing functions from diffusion approximations, and comparing diffusion with simulation.
+Boilerplate code for simulating FPMs, computing quantities from the diffusion approximations, and comparing diffusion with simulation.
 
 File contents:
 * `how_to.ipynb` -- notebook with a tutorial;
