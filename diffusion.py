@@ -9,21 +9,61 @@ def a_WF_selection(N, s, h):
     Reference: Ewens eq. 5.43.
 
     Args:
-        N (int): population size
-        s (float): selection coefficient
-        h (float): dominance coefficient
+        N (int): population size.
+        s (float): selection coefficient.
+        h (float): dominance coefficient.
 
     Returns:
-        func: drift function for defined parameters
+        func: drift function for the specified parameters.
     """
     alpha = 2*N*s
 
-    def a(x):
+    def ans(x):
         return alpha * x * (1-x) * (x + h*(1-2*x))
-    return a
+    return ans
+
+def a_conformity_3rm(N, s, D):
+    """Example drift function a(x) for the FPM of conformist transmission with n=3 role models.
+
+    Args:
+        N (int): population size.
+        s (float): selection coefficient.
+        D (float): conformity coefficient.
+
+    Returns:
+        func: drift function for the specified parameters.
+    """
+    alpha = s*N
+    Delta = D*N
+
+    def ans(x):
+        return x*(alpha - alpha*x - Delta*(-1 + x)*(-1 + 2*x))
+
+    return ans
+
+def a_conformity_5rm(N, s, D3, D4):
+    """Example drift function a(x) for the FPM of conformist transmission with n=5 role models.
+
+    Args:
+        N (int): population size.
+        s (float): selection coefficient.
+        D3 (float): conformity coefficient D(3).
+        D4 (float): conformity coefficient D(4).
+
+    Returns:
+        func: drift function for the specified parameters.
+    """
+    alpha = s*N
+    Delta3 = D3*N
+    Delta4 = D4*N
+
+    def ans(x):
+        return alpha*x - alpha*x**2 + (1 - x)*x*(-1 + 2*x)*(Delta4 - (2*Delta3 - Delta4)*(-1 + x)*x)
+
+    return ans
 
 
-def b(x):
+def b_std(x):
     """Standard diffusion function used in most diffusion approximations.
 
     Reference: Ewens eq. 5.5
@@ -38,12 +78,12 @@ def P0(p, a, b):
     Reference: Ewens eq. 4.15
 
     Args:
-        p (float): initial frequency
-        a (func): drift function
-        b (func): diffusion function
+        p (float): initial frequency.
+        a (func): drift function.
+        b (func): diffusion function.
 
     Returns:
-        float: probability of fixation to $p=0$
+        float: probability of fixation to p=0.
     """
 
     def integrand(x):
@@ -77,12 +117,12 @@ def P1(p, a, b):
     Reference: Ewens eq. 4.17
 
     Args:
-        p (float): initial frequency
-        a (func): drift function
-        b (func): diffusion function
+        p (float): initial frequency.
+        a (func): drift function.
+        b (func): diffusion function.
 
     Returns:
-        float: probability of fixation to $p=0$
+        float: probability of fixation to p=0.
     """
 
 
@@ -117,12 +157,12 @@ def t_bar(p, a, b):
     Reference: Ewens eq. 4.21
 
     Args:
-        p (_type_): _description_
-        a (_type_): _description_
-        b (_type_): _description_
+        p (float): initial frequency.
+        a (_type_): drift function.
+        b (_type_): diffusion function.
 
     Returns:
-        float: time to absorption, in units of (twice) population size
+        float: time to absorption, in units of (twice) population size.
     """
 
     def integrand(x):

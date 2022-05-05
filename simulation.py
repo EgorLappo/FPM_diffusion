@@ -65,7 +65,7 @@ def iter_conformity_5rm(s, D3, D4):
 
 """ FPM SIMULATION FUNCTIONS """
 
-def simulate(iter_fn, n_range, N, p_init=0.5, seed=42):
+def simulate(iter_fn, n_range, N, p_init=0.5, seed=None):
     """Basic simulation function.
 
     Simulate a single run of fixed length (number of generations)
@@ -75,12 +75,13 @@ def simulate(iter_fn, n_range, N, p_init=0.5, seed=42):
         n_range (int): range of the simulation, number of generations to simulate.
         N (int): population size, the actual size of the list encoding the individuals in the population
         p_init (float, optional): initial frequency. Defaults to 0.5.
-        seed (int, optional): random seed. Defaults to 42.
+        seed (int, optional): random seed. Defaults to None.
 
     Returns:
         list(float): list containing frequencies of allele "A" in each generation.
     """
-    np.random.seed(seed)
+    if seed:
+        np.random.seed(seed)
     population = np.array([1]*floor(N*p_init) + [0]*(N-floor(N*p_init)))
     assert N == len(population)
 
